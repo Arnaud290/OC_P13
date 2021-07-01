@@ -40,3 +40,4 @@ class ViewTests(TestCase):
         title = "<title>{}</title>".format(letting.title)
         self.assertEqual(response.status_code, 200)
         self.assertIn(title.encode('utf-8'), response.content)
+
