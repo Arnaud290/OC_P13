@@ -2,15 +2,6 @@ version: 2.1
 
 # Define the jobs we want to run for this project
 jobs:
-  test:
-    machine: 
-      image: ubuntu-2004:202010-01
-    dependencies:
-      override:
-        - pip install -r requirements.txt
-    steps:
-      - checkout
-      - run: python ./manage.py test
   build:
     machine: True
     steps:
@@ -19,20 +10,20 @@ jobs:
           echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
           docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
           docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
-  #deploy:
-  #  machine: True
-  #  steps:
-  #   - checkout
-  #   - run: |
-  #        echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-  #        docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
+  deploy:
+    machine: True
+    steps:
+     - checkout
+     - run: |
+          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+          docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
  
 
 # Orchestrate our job run sequence
 workflows:
-  build_and_test:
+  build_and_deploy:
     jobs:
-      - test
-      - build:
+      - build
+      - deploy:
           requires:
-            - test
+            - build
