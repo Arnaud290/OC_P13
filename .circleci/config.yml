@@ -11,6 +11,7 @@ jobs:
           docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
           
   test:
+    docker:
      - image: circleci/python:3.6.2-stretch-browsers
         auth:
           username: $DOCKER_USER
