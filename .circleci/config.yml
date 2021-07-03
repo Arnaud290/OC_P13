@@ -1,9 +1,9 @@
 version: 2
 jobs:
  build:
-   machine: true
-    environment:
-     - SHORT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
+   machine:
+     environment:
+      - SHORT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
    steps:
      - checkout
      # start proprietary DB using private Docker image
