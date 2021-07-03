@@ -33,9 +33,10 @@ jobs:
          command: |
             echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
             docker build -t arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:10} .
-            docker tag arnaud290/python-oc-lettings-fr:latest arnaud290/python-oc-lettings-fr:hash
-            docker push arnaud290/python-oc-lettings-fr:latest
+            docker build -t arnaud290/python-oc-lettings-fr:latest .
             docker push arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:10}
+            docker push arnaud290/python-oc-lettings-fr:latest
+           
 
 workflows:
   test_and_build:
