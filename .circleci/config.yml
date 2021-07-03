@@ -10,13 +10,13 @@ jobs:
           echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
           docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
           docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
-  deploy:
-    machine: True
-    steps:
-     - checkout
-     - run: |
-          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-          docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
+  #deploy:
+  #  machine: True
+  #  steps:
+  #   - checkout
+  #   - run: |
+          
+          
  
 
 # Orchestrate our job run sequence
@@ -24,6 +24,6 @@ workflows:
   build_and_deploy:
     jobs:
       - build
-      - deploy:
-          requires:
-            - build
+      #- deploy:
+      #    requires:
+      #      - build
