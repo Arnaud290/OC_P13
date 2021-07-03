@@ -10,7 +10,9 @@ jobs:
           password: $DOCKER_PASS  # context / project UI env-var reference
     steps:
       - checkout
-      - run: docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
+      - run: |
+              echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+              docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
   test:
     docker:
       - image: circleci/python:3.6.2-stretch-browsers
@@ -20,8 +22,8 @@ jobs:
     steps:
       - checkout
       - run: |
-            pip install -r requirements.txt
-            python manage.py test
+              pip install -r requirements.txt
+              python manage.py test
   deploy:
     docker:
       - image: circleci/python:3.6.2-stretch-browsers
@@ -30,7 +32,9 @@ jobs:
           password: $DOCKER_PASS  # context / project UI env-var reference
     steps:
       - checkout
-      - run: docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
+      - run: |
+              echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+              docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
 
 # Orchestrate our job run sequence
 workflows:
