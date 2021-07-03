@@ -22,7 +22,7 @@ class ViewTests(TestCase):
     def test_index_view(self):
         url = reverse('lettings:index')
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 200)
         self.assertIn(b"<title>Lettings</title>", response.content)
 
     def test_letting_view(self):
