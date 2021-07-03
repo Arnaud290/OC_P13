@@ -5,12 +5,13 @@ jobs:
   test:
     machine: 
       - python:
-          version: 3.8
+          version: 3.6.2
+    dependencies:
+      override:
+        - pip install -r requirements.txt
     steps:
       - checkout
-      - run: |
-          pip install -r ./requirements.txt
-          python3 ./manage.py test
+      - run: python ./manage.py test
   build:
     machine: True
     steps:
