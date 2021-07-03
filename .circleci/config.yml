@@ -10,7 +10,7 @@ jobs:
          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
 
      # build the application image
-     - run: docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
+     - run: docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_HASH .
 
      # deploy the image
-     - run: docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
+     - run: docker push arnaud290/python-oc-lettings-fr:$CIRCLE_HASH
