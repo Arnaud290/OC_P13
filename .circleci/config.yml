@@ -4,32 +4,18 @@ version: 2.1
 jobs:
   build:
     steps:
-      - checkout
-      - run: |
-              echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-              docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
+     - checkout
+     - run: |
+          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+          docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
+          docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
   test:
     docker:
-      - image: circleci/python:3.6.2-stretch-browsers
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS  # context / project UI env-var reference
+      - image: arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
     steps:
       - checkout
-      - run: |
-              pip install -r requirements.txt
-              python manage.py test
-  deploy:
-    docker:
-      - image: circleci/python:3.6.2-stretch-browsers
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS  # context / project UI env-var reference
-    steps:
-      - checkout
-      - run: |
-              echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-              docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
+      - run: python ./manage.py test
+ 
 
 # Orchestrate our job run sequence
 workflows:
@@ -39,40 +25,3 @@ workflows:
       - test:
           requires:
             - build
-      - hold:
-          type: approval
-          requires:
-            - build
-            - test
-      - deploy:
-          requires:
-            - hold
-
-
-#version: 2.1
-#
-## Define the jobs we want to run for this project
-#jobs:
-#  build:
-#    steps:
-#     - checkout
-#     - run: |
-#          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-#          docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
-#          docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
-#  test:
-#    docker:
-#      - image: arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
-#    steps:
-#      - checkout
-#      - run: python ./manage.py test
-# 
-#
-## Orchestrate our job run sequence
-#workflows:
-#  build_and_test:
-#    jobs:
-#      - build
-#      - test:
-#          requires:
-#            - build
