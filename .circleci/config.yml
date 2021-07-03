@@ -4,7 +4,6 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
         auth:
           username: $DOCKER_USER
           password: $DOCKER_PASS # context / project UI env-var reference
