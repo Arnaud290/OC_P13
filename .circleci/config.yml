@@ -3,18 +3,23 @@ version: 2.1
 # Define the jobs we want to run for this project
 jobs:
   build:
+    machine: True
     steps:
      - checkout
      - run: |
           echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
           docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
-          docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
+          
   test:
-    docker:
-      - image: arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
+     - image: circleci/python:3.6.2-stretch-browsers
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS  # context / project UI env-var reference
     steps:
       - checkout
-      - run: python ./manage.py test
+      - run: |
+          pip install -r ./requirements.txt
+          python ./manage.py test
  
 
 # Orchestrate our job run sequence
@@ -25,3 +30,6 @@ workflows:
       - test:
           requires:
             - build
+
+
+#docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
