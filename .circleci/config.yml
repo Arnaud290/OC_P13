@@ -13,11 +13,11 @@ jobs:
      # start proprietary DB using private Docker image
      # with credentials stored in the UI
      - run: |
-         pip install -r requirements.txt
-         python ./manage.py test
-         echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-         docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
-         docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
+          pip install -r ./requirements.txt
+          python ./manage.py test
+          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+          docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
+          docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
   test:
     docker:
       - image: arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
