@@ -4,8 +4,7 @@ version: 2.1
 jobs:
   test:
     machine: 
-      - python:
-          version: 3.6.2
+      image: ubuntu-2004:202010-01
     dependencies:
       override:
         - pip install -r requirements.txt
