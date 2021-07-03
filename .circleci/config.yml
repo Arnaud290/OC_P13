@@ -37,7 +37,6 @@ jobs:
             docker push arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:10}
             docker push arnaud290/python-oc-lettings-fr:latest
            
-
 workflows:
   test_and_build:
     jobs:
