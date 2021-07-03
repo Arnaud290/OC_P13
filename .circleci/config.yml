@@ -11,24 +11,14 @@ jobs:
      - run: |
          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
          docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
+         docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
   test:
     docker:
       - image: arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS  # context / project UI env-var reference
     steps:
       - checkout
       - run: python ./manage.py test
-  deploy:
-    docker:
-      - image: arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS  # context / project UI env-var reference
-    steps:
-      - checkout
-      - run: docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
+ 
 
 # Orchestrate our job run sequence
 workflows:
@@ -43,6 +33,3 @@ workflows:
           requires:
             - build
             - test
-      - deploy:
-          requires:
-            - hold
