@@ -7,8 +7,8 @@ jobs:
     steps:
       - checkout
       - run: |
-          pip install -r ./requirements.txt
-          python ./manage.py test
+          pip3 install -r ./requirements.txt
+          python3 ./manage.py test
   build:
     machine: True
     steps:
