@@ -37,6 +37,7 @@ jobs:
             docker tag arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} arnaud290/python-oc-lettings-fr:latest
             docker push arnaud290/python-oc-lettings-fr:latest
 
+
 workflows:
   test_and_build:
     jobs:
