@@ -2,35 +2,30 @@ version: 2.1
 
 # Define the jobs we want to run for this project
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/python:3.6.2-stretch-browsers
         auth:
           username: $DOCKER_USER
           password: $DOCKER_PASS  # context / project UI env-var reference
     steps:
-     - checkout
-     # start proprietary DB using private Docker image
-     # with credentials stored in the UI
-     - run: |
-          pip install -r ./requirements.txt
+      - checkout
+      - run: |
+          pip install -r ./requirmements.txt
           python ./manage.py test
+  build:
+    steps:
+     - checkout
+     - run: |
           echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
           docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
           docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
-  test:
-    docker:
-      - image: arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
-    steps:
-      - checkout
-      - run: python ./manage.py test
- 
 
 # Orchestrate our job run sequence
 workflows:
   build_and_test:
     jobs:
-      - build
-      - test:
+      - test
+      - bulid:
           requires:
-            - build
+            - test
