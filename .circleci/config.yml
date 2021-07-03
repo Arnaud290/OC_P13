@@ -6,7 +6,10 @@ jobs:
      - checkout
      # start proprietary DB using private Docker image
      # with credentials stored in the UI
-     - run: python manage.py test
+     - run: |
+         python -m venv venv
+         source venv/bin/activate
+         python manage.py test
      - run: |
          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
 
