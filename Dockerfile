@@ -21,7 +21,7 @@ EXPOSE 8000
 #CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 # add and run as non-root user
-RUN adduser -D arnaud
+RUN adduser arnaud
 USER arnaud
 
 # run gunicorn
