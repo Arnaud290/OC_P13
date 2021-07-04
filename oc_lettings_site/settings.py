@@ -1,5 +1,18 @@
 import os
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk import capture_exception
 
+sentry_sdk.init(
+    dsn=os.environ['SENTRY_DSN'],
+    integrations=[DjangoIntegration()]
+)
+
+try:
+    a_potentially_failing_function()
+except Exception as e:
+    # Alternatively the argument can be omitted
+    capture_exception(e)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
