@@ -19,7 +19,7 @@ VOLUME /app
 #CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 # add and run as non-root user
-RUN adduser arnaud
+RUN adduser --disabled-password arnaud
 USER arnaud
 
 # run gunicorn
