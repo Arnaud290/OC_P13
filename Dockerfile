@@ -16,8 +16,6 @@ RUN pip install -r requirements.txt
 COPY . /app
 VOLUME /app
 
-#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
 # add and run as non-root user
 RUN adduser --disabled-password arnaud
 USER arnaud
