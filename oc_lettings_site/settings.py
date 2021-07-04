@@ -4,7 +4,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk import capture_exception
 
 sentry_sdk.init(
-    dsn=os.environ['SENTRY_DSN'],
+    dsn=os.environ.get('SENTRY_DSN'),
     integrations=[DjangoIntegration()]
 )
 
