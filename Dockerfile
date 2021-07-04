@@ -17,8 +17,8 @@ COPY . /app
 VOLUME /app
 
 # add and run as non-root user
-RUN adduser --disabled-password arnaud
-USER arnaud
+RUN adduser --disabled-password appuser && chown -R appuser /app
+USER appuser
 
 # collect static files
 RUN python manage.py collectstatic --noinput
