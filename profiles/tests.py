@@ -9,6 +9,7 @@ def create_user(username):
     user.set_password('P@ssword1')
     return user
 
+
 def create_profile(user, favorite_city):
     return Profile.objects.create(user=user, favorite_city=favorite_city)
 
@@ -22,11 +23,10 @@ class ViewTests(TestCase):
         self.assertIn(b"<title>Profiles</title>", response.content)
 
     def test_letting_view(self):
-        user= create_user(username='test')
+        user = create_user(username='test')
         profile = create_profile(user=user, favorite_city='test city')
         url = reverse('profiles:profile', args=(user.username,))
         response = self.client.get(url)
         title = "<title>{}</title>".format(profile.user.username)
         self.assertEqual(response.status_code, 200)
         self.assertIn(title.encode('utf-8'), response.content)
-        

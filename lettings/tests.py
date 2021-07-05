@@ -13,6 +13,7 @@ def create_address(number, street, city, state, zip_code, country_iso_code):
         country_iso_code=country_iso_code
     )
 
+
 def create_letting(title, address):
     return Letting.objects.create(title=title, address=address)
 
@@ -40,4 +41,3 @@ class ViewTests(TestCase):
         title = "<title>{}</title>".format(letting.title)
         self.assertEqual(response.status_code, 200)
         self.assertIn(title.encode('utf-8'), response.content)
-
