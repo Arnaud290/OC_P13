@@ -21,6 +21,12 @@ jobs:
           command: |
             . venv/bin/activate
             python3 manage.py test
+      - store_artifacts:
+          path: test-reports/
+          destination: python_app
+      - run:
+          name: Create Docker
+          command: |
             echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
             docker build -t arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} .
             docker push arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7}
