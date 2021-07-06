@@ -1,7 +1,7 @@
 version: 2.1
 jobs:
   build:
-    working_directory: app/
+    working_directory: $CIRCLE_REPOSITORY_URL/
     docker:
       - image: cimg/python:3.9.6
     steps:
