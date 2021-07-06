@@ -38,9 +38,10 @@ jobs:
           name: Push to Heroku
           command: |
             curl https://cli-assets.heroku.com/install.sh | sh
+            docker tag arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} oc-lettings-290
             HEROKU_API_KEY=$HEROKU_API_KEY heroku container:login
-            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:push -a arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} web
-            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:release -a arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} web
+            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:push -a oc-lettings-290 web
+            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:release -a oc-lettings-290 web
 
 workflows:
   test_build_and_deploy:
