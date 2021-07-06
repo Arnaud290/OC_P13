@@ -1,11 +1,7 @@
 version: 2.1
 jobs:
   build:
-<<<<<<< HEAD
-    working_directory: .
-=======
-    working_directory: .
->>>>>>> 7cc9fe4b3613e6129bcaf8a84aae2f6133c305de
+    working_directory: app/
     docker:
       - image: cimg/python:3.9.6
     steps:
