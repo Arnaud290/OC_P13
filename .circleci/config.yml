@@ -1,8 +1,21 @@
 version: 2.1
 jobs:
+  build:
+    machine: True
+    steps:
+     - checkout
+     - run: 
+         name: Build and push docker
+         command: |
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+            docker build -t arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} .
+            docker push arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7}
   test:
     docker:
-      - image: circleci/python:3.6
+      - image: arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7}
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
     steps:
       - checkout
       - restore_cache:
@@ -24,20 +37,12 @@ jobs:
       - store_artifacts:
           path: test-reports/
           destination: python_app
-  build:
-    machine: True
-    steps:
-     - checkout
-     - run: 
-         name: Build and push docker
-         command: |
-            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-            docker build -t arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} .
-            docker push arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7}
-            docker tag arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} arnaud290/python-oc-lettings-fr:latest
-            docker push arnaud290/python-oc-lettings-fr:latest
   deploy:
-    machine: True
+    docker:
+      - image: arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7}
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
     steps:
       - checkout
       - run:
