@@ -8,11 +8,11 @@ jobs:
          name: Build and push docker
          command: |
             echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-            docker build -t arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} .
-            docker push arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7}
+            docker build -t arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1 .
+            docker push arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
   test:
     docker:
-      - image: arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7}
+      - image: arnaud290/python-oc-lettings-fr:$CIRCLE_SHA1
         auth:
           username: $DOCKER_USER
           password: $DOCKER_PASS
