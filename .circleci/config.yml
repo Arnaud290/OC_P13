@@ -24,7 +24,7 @@ jobs:
       - store_artifacts:
           path: test-reports/
           destination: python_app
-  build:
+  build_deploy:
     machine: True
     steps:
       - checkout
@@ -46,6 +46,6 @@ workflows:
   test_build_and_deploy:
     jobs:
       - test
-      - build:
+      - build_deploy:
           requires:
             - test
