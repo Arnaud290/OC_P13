@@ -1,9 +1,8 @@
 version: 2.1
 jobs:
-  build:
-    working_directory: $CIRCLE_REPOSITORY_URL/
+  test:
     docker:
-      - image: cimg/python:3.9.6
+      - image: circleci/python:3.6
     steps:
       - checkout
       - restore_cache:
@@ -25,20 +24,18 @@ jobs:
       - store_artifacts:
           path: test-reports/
           destination: python_app
-      - run:
-          name: Create Docker
-          command: |
-            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-            docker build -t arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} .
-            docker push arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7}
-  test:
+  build:
     machine: True
     steps:
      - checkout
      - run: 
-         name: Test Docker
+         name: Build and push docker
          command: |
-            docker run -d  -e "PORT=8000" -e "DEBUG=1" -p 8000:8000 arnaud290/python-oc-lettings-fr  
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+            docker build -t arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} .
+            docker push arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7}
+            docker tag arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} arnaud290/python-oc-lettings-fr:latest
+            docker push arnaud290/python-oc-lettings-fr:latest
   deploy:
     machine: True
     steps:
@@ -49,12 +46,12 @@ jobs:
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
 workflows:
-  build_test_and_deploy:
+  test_build_and_deploy:
     jobs:
-      - build
-      - test:
+      - test
+      - build:
           requires:
-            - build
+            - test
       - deploy:
           requires:
             - build
