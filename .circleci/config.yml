@@ -24,13 +24,12 @@ jobs:
       - store_artifacts:
           path: test-reports/
           destination: python_app
-     - run: 
+      - run: 
          name: Build and push docker
          command: |
             echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
             docker build -t arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} .
             docker push arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7}
-            docker tag arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} arnaud290/python-oc-lettings-fr:latest
       - run:
           name: Deploy Master to Heroku
           command: |
