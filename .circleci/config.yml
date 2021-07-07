@@ -27,6 +27,9 @@ jobs:
           username: $DOCKER_USER
           password: $DOCKER_PASS
     steps:
+      - checkout
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           name: Running tests
           command: |
