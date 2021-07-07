@@ -21,32 +21,8 @@ jobs:
           command: |
             . venv/bin/activate
             python3 manage.py test
-      - store_artifacts:
-          path: test-reports/
-          destination: python_app
-  build_deploy:
-    machine: True
-    steps:
-      - checkout
-      - run: 
-          name: Build and push to docker hub 
-          command: |
-            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-            docker build -t arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} .
-            docker push arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7}
-      - run:
-          name: Push to Heroku
-          command: |
-            curl https://cli-assets.heroku.com/install.sh | sh
-            docker tag arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} oc-lettings-290
-            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:login
-            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:push -a oc-lettings-290 web
-            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:release -a oc-lettings-290 web
-
+            
 workflows:
-  test_build_and_deploy:
+  test:
     jobs:
       - test
-      - build_deploy:
-          requires:
-            - test
