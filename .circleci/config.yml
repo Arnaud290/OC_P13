@@ -16,11 +16,11 @@ jobs:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - "venv"
-      - run:
     test:
       docker:
       - image: python:3.8-alpine
       steps:
+        - run:
           name: Running tests
           command: |
             . venv/bin/activate
