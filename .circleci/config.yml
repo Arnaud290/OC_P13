@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  test:
+  build:
     docker:
       - image: python:3.8-alpine
     steps:
@@ -23,6 +23,6 @@ jobs:
             python3 manage.py test
             
 workflows:
-  test:
+  build_test:
     jobs:
-      - test
+      - build
