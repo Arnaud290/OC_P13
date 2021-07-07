@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  test:
+  build:
     docker:
       - image: python:3.8-alpine
     steps:
@@ -17,11 +17,15 @@ jobs:
           paths:
             - "venv"
       - run:
+    test:
+      docker:
+      - image: python:3.8-alpine
+      steps:
           name: Running tests
           command: |
             . venv/bin/activate
             python3 manage.py test
-  build_deploy:
+  deploy:
     machine: True
     steps:
       - checkout
@@ -41,9 +45,12 @@ jobs:
             HEROKU_API_KEY=$HEROKU_API_KEY heroku container:release -a oc-lettings-290 web
 
 workflows:
-  test_build_and_deploy:
+  build_test_and_deploy:
     jobs:
-      - test
-      - build_deploy:
+      - build
+      - test:
+          requires:
+            - build
+      - deploy:
           requires:
             - test
