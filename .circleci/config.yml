@@ -3,6 +3,9 @@ jobs:
   build:
     docker:
       - image: python:3.8-alpine
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
     steps:
       - checkout
       - restore_cache:
@@ -20,6 +23,9 @@ jobs:
   test:
     docker:
       - image: python:3.8-alpine
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
     steps:
       - run:
           name: Running tests
@@ -31,13 +37,13 @@ jobs:
     steps:
       - checkout
       - run: 
-          name: Build and push to docker hub 
+          name: Create docker and push to docker hub 
           command: |
             echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
             docker build -t arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} .
             docker push arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7}
       - run:
-          name: Push to Heroku
+          name: Push docker to Heroku
           command: |
             curl https://cli-assets.heroku.com/install.sh | sh
             docker tag arnaud290/python-oc-lettings-fr:${CIRCLE_SHA1:0:7} oc-lettings-290
