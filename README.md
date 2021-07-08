@@ -147,8 +147,8 @@ Ajout de l'application sur Heroku :
 Ajout de l'application Sentry :
 
 - `https://sentry.io/signup/` connexion avec github
-- creer un projet avec Django
-- récupérer le dsn ('https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.ingest.sentry.io/xxxxxxx')
+- Creer un projet avec Django
+- Récupérer le dsn ('https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.ingest.sentry.io/xxxxxxx')
 - `cd /path/to/OC_P13`
 - `heroku config:set SENTRY_DSN='https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.ingest.sentry.io/xxxxxxx' -a oc-lettings-x`
 - Test d'une erreur `https://oc-lettings-x.herokuapp.com/sentry-debug/`
@@ -180,4 +180,4 @@ Selectionner le projet sur Circleci
 
 Pour des raisons de sécurité, il est préférable d'utiliser la double authentification sur Github, Dockerhub et Heroku.
 Sur Github, le remote sur le repository peut s'effectuer avec une clé SSH.
-Sur Dockerhub, il est preferable d'utiliser les access_tokens pour les authentifications (obligatoire avec le 2FA). 
+Sur Dockerhub, il est preferable d'utiliser les access_tokens pour les authentifications (obligatoire avec le 2FA).
