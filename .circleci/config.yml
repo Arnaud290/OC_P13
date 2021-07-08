@@ -2,7 +2,10 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: python:3.8-alpine
+      - image: python:3.8
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
     steps:
       - checkout
       - restore_cache:
