@@ -25,6 +25,7 @@ jobs:
           command: |
             . venv/bin/activate
             python3 manage.py test
+<<<<<<< HEAD
   deploy:
     machine: True
     steps:
@@ -51,3 +52,10 @@ workflows:
       - deploy:
           requires:
             - build
+=======
+            
+workflows:
+  build_test:
+    jobs:
+      - build
+>>>>>>> issue_test
