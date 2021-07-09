@@ -10,6 +10,7 @@ ENV DEBUG 0
 # install dependencies
 RUN pip install --upgrade pip 
 COPY ./requirements.txt /app
+RUN chown www-data /app/oc-lettings-site-sqlite3
 RUN pip install -r requirements.txt
 
 # copy project
@@ -21,6 +22,7 @@ RUN python manage.py collectstatic --noinput
 
 # add and run as non-root user
 RUN adduser --disabled-password user
+RUN usermod -a -G www-data user
 USER user
 
 # run gunicorn
