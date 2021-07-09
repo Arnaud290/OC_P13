@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM python:3.8
 
 WORKDIR /app
 
@@ -21,7 +21,7 @@ RUN python manage.py collectstatic --noinput
 
 # add and run as non-root user
 RUN adduser --disabled-password user
-RUN chown user:user /app/oc-lettings-site.sqlite3
+RUN chown -R user:user /app
 USER user
 
 # run gunicorn
