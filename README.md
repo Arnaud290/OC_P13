@@ -138,6 +138,7 @@ Ajout de l'application sur Heroku :
 - `heroku login` (connexion avec le navigateur web)
 - `heroku create oc-lettings-x --region eu` x correspond a un chiffre non utilisé
 - `heroku config:set SECRET_KEY='(50 chiffres et lettres et caractères spéciaux aléatoires)' -a oc-lettings-x`
+- `heroku config:set DEBUG=0' -a oc-lettings-x` mettre à 1 pour pouvoir acceder à la page admin
 - `heroku container:login`
 - `docker build -t registry.heroku.com/oc-lettings-x/web .`
 - `docker push registry.heroku.com/oc-lettings-x/web`
