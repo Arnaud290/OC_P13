@@ -4,6 +4,7 @@ from lettings.models import Letting, Address
 
 
 def create_address(number, street, city, state, zip_code, country_iso_code):
+    """Creating a test address"""
     return Address.objects.create(
         number=number,
         street=street,
@@ -15,6 +16,7 @@ def create_address(number, street, city, state, zip_code, country_iso_code):
 
 
 def create_letting(title, address):
+    """Creating a test letting"""
     return Letting.objects.create(title=title, address=address)
 
 

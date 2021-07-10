@@ -5,12 +5,14 @@ from profiles.models import Profile
 
 
 def create_user(username):
+    """Creating a test user"""
     user = User.objects.create(username=username)
     user.set_password('P@ssword1')
     return user
 
 
 def create_profile(user, favorite_city):
+    """Creating a test profile"""
     return Profile.objects.create(user=user, favorite_city=favorite_city)
 
 
