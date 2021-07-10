@@ -26,5 +26,5 @@ class Migration(migrations.Migration):
         migrations.RunPython(migrate_profiles)
     ]
 
-    if global_apps.is_installed('oc_lettings_site'):
-        dependencies.append(('oc_lettings_site', '0001_initial'))
+    #if global_apps.is_installed('oc_lettings_site'):
+    #    dependencies.append(('oc_lettings_site', '0001_initial'))

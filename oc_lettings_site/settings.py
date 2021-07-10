@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'oc-lettings-290.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'oc_lettings_site.apps.OCLettingsSiteConfig',
     'lettings.apps.LettingsConfig',
     'profiles.apps.ProfilesConfig',
     'django.contrib.admin',
@@ -59,7 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'oc_lettings_site.urls'
 
 TEMPLATES = [
     {
