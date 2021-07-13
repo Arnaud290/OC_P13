@@ -38,6 +38,7 @@ jobs:
       - run:
           name: Push docker to Heroku
           command: |
+            set -e
             curl https://cli-assets.heroku.com/install.sh | sh
             HEROKU_API_KEY=$HEROKU_API_KEY heroku create $HEROKU_APP_NAME --region eu
             HEROKU_API_KEY=$HEROKU_API_KEY heroku config:set SECRET_KEY=$SECRET_KEY -a $HEROKU_APP_NAME
