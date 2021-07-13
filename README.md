@@ -149,7 +149,7 @@ Ajout de l'application Sentry :
 
 - `https://sentry.io/signup/` connexion avec github
 - Creer un projet avec Django
-- Récupérer le dsn ('https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.ingest.sentry.io/xxxxxxx')
+- Récupérer le dsn ('https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.ingest.sentry.io/xxxxxxx') SENTRY_DSN
 - `cd /path/to/OC_P13`
 - `heroku config:set SENTRY_DSN='https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.ingest.sentry.io/xxxxxxx' -a oc-lettings-x`
 - Test d'une erreur `https://oc-lettings-x.herokuapp.com/sentry-debug/`
@@ -175,9 +175,11 @@ Selectionner le projet sur Circleci
     - Name: DOCKER_USER, Value: DOCKER_ID
     - Name: HEROKU_API_KEY, Value: API_KEY
     - Name: HEROKU_APP_NAME, Value: oc-lettings-x
+    - Name: SECRET_KEY, Value: SECRET_KEY (50 chiffres et lettres et caractères spéciaux aléatoires)
+    - Name: SENTRY_DSN, Value: SENTRY_DSN
 - A chaque git push de la branche master, l'application est testé, un conteneur est crée avec un tag correspondant au hash du commit
   et stocké sur dockerhub et l'application sur Heroku est mise a jour
-- A chaque git push de la branche issue_test, l'application est testé   
+- A chaque git push de la branche issue_test, l'application est recréé
 
 Pour des raisons de sécurité, il est préférable d'utiliser la double authentification sur Github, Dockerhub et Heroku.
 Sur Github, le remote sur le repository peut s'effectuer avec une clé SSH.
