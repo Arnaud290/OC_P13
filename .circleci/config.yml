@@ -26,7 +26,8 @@ jobs:
             . venv/bin/activate
             python3 manage.py test
   deploy:
-    machine: True
+    machine:
+       image: ubuntu-2004:202201-02
     steps:
       - checkout
       - run: 
